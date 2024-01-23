@@ -1,0 +1,4 @@
+langservers:
+  svelte:
+    - svelte-language-server
+    - --stdio
