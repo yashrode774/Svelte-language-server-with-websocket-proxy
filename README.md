@@ -24,3 +24,10 @@ npm install
 npm run prepare
 node dist/server.js --port 3000 --languageServers servers.yml
 ```
+
+Testing:
+
+```
+Go to https://hoppscotch.io/realtime/websocket
+ping ws://localhost:3000/svelte
+```
