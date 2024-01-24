@@ -51,12 +51,6 @@ function toSocket(webSocket: ws): rpc.IWebSocket {
       dispose: () => webSocket.close()
   }
 }
-wss.on('connection', (ws) => {
-    ws.on("message", (data) => {
-        console.log('data from client:', data);
-        ws.send("thanks client");
-    })
-})
 
 wss.on('connection', (client : ws, request : http.IncomingMessage) => {
   let langServer : string[];
@@ -72,13 +66,13 @@ wss.on('connection', (client : ws, request : http.IncomingMessage) => {
     return;
   }
 
-  // let localConnection = rpcServer.createServerProcess('Example', langServer[0], langServer.slice(1));
-  // let socket : rpc.IWebSocket = toSocket(client);
-  // let connection = rpcServer.createWebSocketConnection(socket);
-  // rpcServer.forward(connection, localConnection);
-  // console.log(`Forwarding new client`);
-  // socket.onClose((code, reason) => {
-  //   console.log('Client closed', reason);
-  //   localConnection.dispose();
-  // });
+  let localConnection = rpcServer.createServerProcess('Example', langServer[0], langServer.slice(1));
+  let socket : rpc.IWebSocket = toSocket(client);
+  let connection = rpcServer.createWebSocketConnection(socket);
+  rpcServer.forward(connection, localConnection);
+  console.log(`Forwarding new client`);
+  socket.onClose((code, reason) => {
+    console.log('Client closed', reason);
+    localConnection.dispose();
+  });
 });
