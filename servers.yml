@@ -1,6 +1,6 @@
 langservers:
   svelte:
-    - svelte-language-server
+    - svelteserver
     - --stdio
   ts:
     - typescript-language-server
